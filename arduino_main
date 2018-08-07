@@ -1,0 +1,37 @@
+#define echoPin1 2 // Echo Pin for sonar 
+#define trigPin1 3 // Trigger Pin for sonar 
+
+long duration1, distance1; // Duration used to calculate distance
+
+void setup() {
+
+ pinMode(trigPin1, OUTPUT); // trigger pin as output
+ pinMode(echoPin1, INPUT);  // echo pin as input
+}
+
+void loop() {
+/* The following trigPin/echoPin cycle is used to determine the
+ distance of the nearest object by bouncing soundwaves off of it. */ 
+
+
+ digitalWrite(trigPin1, LOW); 
+ delayMicroseconds(2); 
+ digitalWrite(trigPin1, HIGH);
+ delayMicroseconds(10); 
+ digitalWrite(trigPin1, LOW);
+ // pulseIn( ) function determines a pulse width in time
+ // duration of pulse is proportional to distance of obstacle
+ duration1 = pulseIn(echoPin1, HIGH);
+ 
+ //  distance = (high level timevelocity of sound (340M/S) / 2, 
+ //  in centimeter = uS/58
+ distance1 = duration1/58.2;
+ if(distance1<10)
+   distance1 = 1;
+ else distance1 = 0;
+
+ // the status is updated every 30 seconds.
+ delay(30000);
+ distance1 = 0;
+
+}
